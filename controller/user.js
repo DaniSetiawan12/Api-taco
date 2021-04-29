@@ -53,27 +53,29 @@ exports.Menulogin = (data) =>
     })
 
     exports.KonfimasiSandi = (data) =>
-    new Promise(async (resolve, reject)=>{
-        user.findOne({
-            username: data.username
-        }).then(res=> {
-            if(res) {
-                user.findOne({
-                    password: data.password,
-                    username: res.username
-                }).then(r => {
-                    if(r){
-                        resolve(response.commonResult(r))
-                    }else {
-                        reject(response.commonErrorMsg("Password salah"))
-                    }
-                }).catch(err => {
-                    reject(response.commonErrorMsg("Terjadi masalah pada server"))
-                })
-            }else {
-                reject(response.commonErrorMsg("Username tidak ditemukan"))
-            }
-        }).catch(err=>{
-            reject(response.commonErrorMsg("Terjadi masalah pada server"))
-        })
+        new Promise(async (resolve, reject)=>{
+            console.log("ada")
+            user.findOne({
+                username: data.username
+            }).then(res=> {
+                if(res) {
+                    user.findOne({
+                        password: data.password,
+                        username: res.username
+                    }).then(r => {
+                        if(r){
+                            console.log(r)
+                            resolve(response.commonResult(r))
+                        }else {
+                            reject(response.commonErrorMsg("Password salah"))
+                        }
+                    }).catch(err => {
+                        reject(response.commonErrorMsg("Terjadi masalah pada server"))
+                    })
+                }else {
+                    reject(response.commonErrorMsg("Username tidak ditemukan"))
+                }
+            }).catch(err=>{
+                reject(response.commonErrorMsg("Terjadi masalah pada server"))
+            })
     })

@@ -33,5 +33,14 @@ module.exports = {
             msg : 'Berhasil Memuat Data',
             data : data
         }
+    },
+    commonSuccesWithData: (data, totalBukaPintu) => {
+        return {
+            error : false,
+            msg : 'Berhasil Memuat Data',
+            data,
+            totalBukaPintu
+        }
     }
+
 };

@@ -3,9 +3,11 @@ const mongoose = require ('mongoose')
 const ObjectId = mongoose.Types.ObjectId
 const historyModel = require('../model/history')
 const moment = require("moment")
+const response = require('../config/response')
 
 exports.updatePerintah =(perintahnya, query) =>
     new Promise(async(resolve, reject)=>{
+        console.log(query)
         let data = {}
         perintahModel.updateOne(
             { _id: ObjectId("606579ceb901825cff0f4ee0")},
@@ -17,7 +19,16 @@ exports.updatePerintah =(perintahnya, query) =>
                     resolve({
                         msg: "Berhasil merubah data"
                     })    
-                }else {
+                }else if(perintahnya === "Jeda Buka Gerbang"){
+                    resolve({
+                        msg: "Berhasil merubah data"
+                    })    
+                }else if(perintahnya === "Jeda Tutup Gerbang"){
+                    resolve({
+                        msg: "Berhasil merubah data"
+                    })    
+                }
+                else {
                     Object.assign(data,{
                         type: perintahnya,
                         created_at: moment().toLocaleString(),
@@ -67,6 +78,7 @@ new Promise(async (resolve, reject)=> {
             return {
                 created_at: newDate,
                 status: r.type,
+                _id: r._id
             }
         })
         var datas = {
@@ -74,7 +86,7 @@ new Promise(async (resolve, reject)=> {
             totalBukaPintu: total,
         }
 
-        resolve(datas)
+        resolve(response.commonSuccesWithData(datas.data, datas.totalBukaPintu))
     }).catch(err=> {
         reject({
             msg: "Error",
